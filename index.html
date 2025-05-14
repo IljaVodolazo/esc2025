@@ -59,7 +59,8 @@
         #FFFF00,
         #00FF00,
         #0000FF,
-        #4B0082
+        #4B0082,
+        #8B008B
       );
     }
     /* Hover effect for cards */
@@ -75,18 +76,26 @@
     .table-row:nth-child(4) { background-color: #00FF0033; }
     .table-row:nth-child(5) { background-color: #0000FF33; }
     .table-row:nth-child(6) { background-color: #4B008233; }
-    .table-row:nth-child(7) { background-color: #FF000033; }
-    .table-row:nth-child(8) { background-color: #FF7F0033; }
-    .table-row:nth-child(9) { background-color: #FFFF0033; }
-    .table-row:nth-child(10) { background-color: #00FF0033; }
-    .table-row:nth-child(11) { background-color: #0000FF33; }
-    .table-row:nth-child(12) { background-color: #4B008233; }
-    .table-row:nth-child(13) { background-color: #FF000033; }
-    .table-row:nth-child(14) { background-color: #FF7F0033; }
-    .table-row:nth-child(15) { background-color: #FFFF0033; }
-    .table-row:nth-child(16) { background-color: #00FF0033; }
-    .table-row:nth-child(17) { background-color: #0000FF33; }
-    .table-row:nth-child(18) { background-color: #4B008233; }
+    .table-row:nth-child(7) { background-color: #8B008B33; }
+    .table-row:nth-child(8) { background-color: #FF000033; }
+    .table-row:nth-child(9) { background-color: #FF7F0033; }
+    .table-row:nth-child(10) { background-color: #FFFF0033; }
+    .table-row:nth-child(11) { background-color: #00FF0033; }
+    .table-row:nth-child(12) { background-color: #0000FF33; }
+    .table-row:nth-child(13) { background-color: #4B008233; }
+    .table-row:nth-child(14) { background-color: #8B008B33; }
+    .table-row:nth-child(15) { background-color: #FF000033; }
+    .table-row:nth-child(16) { background-color: #FF7F0033; }
+    .table-row:nth-child(17) { background-color: #FFFF0033; }
+    .table-row:nth-child(18) { background-color: #00FF0033; }
+    /* Styling for participant photos */
+    .participant-photo {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #FFFFFF;
+    }
   </style>
 </head>
 <body>
@@ -97,24 +106,58 @@
 
     // Defining data for analysis
     const data = [
-      { country: 'Iceland', participant: 'VÆB', song: 3.33, performance: 4.17, combined: 7.50 },
-      { country: 'Poland', participant: 'Justyna Steczkowska', song: 6.17, performance: 7.67, combined: 13.83 },
-      { country: 'Slovenia', participant: 'Klemen', song: 5.50, performance: 4.83, combined: 10.33 },
-      { country: 'Estonia', participant: 'Tommy Cash', song: 7.67, performance: 9.50, combined: 17.17 },
-      { country: 'Ukraine', participant: 'Ziferblat', song: 3.67, performance: 4.00, combined: 7.67 },
-      { country: 'Sweden', participant: 'KAJ', song: 10.67, performance: 11.00, combined: 21.67 },
-      { country: 'Portugal', participant: 'NAPA', song: 3.00, performance: 2.33, combined: 5.33 },
-      { country: 'Norway', participant: 'Kyle Alessandro', song: 7.50, performance: 7.67, combined: 15.17 },
-      { country: 'Belgium', participant: 'Red Sebastian', song: 3.83, performance: 5.17, combined: 9.00 },
-      { country: 'Azerbaijan', participant: 'Mamagama', song: 2.50, performance: 2.83, combined: 5.33 },
-      { country: 'San Marino', participant: 'Gabry Ponte', song: 8.17, performance: 6.00, combined: 14.17 },
-      { country: 'Albania', participant: 'Shkodra Elektronike', song: 7.50, performance: 7.00, combined: 14.50 },
-      { country: 'Netherlands', participant: 'Claude', song: 8.33, performance: 7.33, combined: 15.67 },
-      { country: 'Croatia', participant: 'Marko Bošnjak', song: 4.83, performance: 5.50, combined: 10.33 },
-      { country: 'Cyprus', participant: 'Theo Evan', song: 6.83, performance: 8.00, combined: 14.83 },
-      { country: 'Spain', participant: 'Melody', song: 9.67, performance: 10.67, combined: 20.33 },
-      { country: 'Italy', participant: 'Lucio Corsi', song: 7.67, performance: 7.00, combined: 14.67 },
-      { country: 'Switzerland', participant: 'Zoë Më', song: 8.17, performance: 5.50, combined: 13.67 }
+      { country: 'Iceland', participant: 'VÆB', song: 3.29, performance: 4.71, combined: 8.00 },
+      { country: 'Poland', participant: 'Justyna Steczkowska', song: 6.71, performance: 8.29, combined: 15.00 },
+      { country: 'Slovenia', participant: 'Klemen', song: 6.14, performance: 4.57, combined: 10.71 },
+      { country: 'Estonia', participant: 'Tommy Cash', song: 8.29, performance: 9.86, combined: 18.14 },
+      { country: 'Ukraine', participant: 'Ziferblat', song: 3.29, performance: 3.71, combined: 7.00 },
+      { country: 'Sweden', participant: 'KAJ', song: 10.86, performance: 11.14, combined: 22.00 },
+      { country: 'Portugal', participant: 'NAPA', song: 2.71, performance: 2.29, combined: 5.00 },
+      { country: 'Norway', participant: 'Kyle Alessandro', song: 6.86, performance: 7.71, combined: 14.57 },
+      { country: 'Belgium', participant: 'Red Sebastian', song: 4.14, performance: 5.86, combined: 10.00 },
+      { country: 'Azerbaijan', participant: 'Mamagama', song: 2.29, performance: 3.57, combined: 5.86 },
+      { country: 'San Marino', participant: 'Gabry Ponte', song: 8.43, performance: 6.57, combined: 15.00 },
+      { country: 'Albania', participant: 'Shkodra Elektronike', song: 7.14, performance: 7.43, combined: 14.57 },
+      { country: 'Netherlands', participant: 'Claude', song: 7.43, performance: 7.00, combined: 14.43 },
+      { country: 'Croatia', participant: 'Marko Bošnjak', song: 5.86, performance: 6.43, combined: 12.29 },
+      { country: 'Cyprus', participant: 'Theo Evan', song: 6.57, performance: 7.71, combined: 14.29 },
+      { country: 'Spain', participant: 'Melody', song: 10.00, performance: 10.86, combined: 20.86 },
+      { country: 'Italy', participant: 'Lucio Corsi', song: 8.00, performance: 7.43, combined: 15.43 },
+      { country: 'Switzerland', participant: 'Zoë Më', song: 8.14, performance: 4.86, combined: 13.00 }
+    ];
+
+    // Defining top 5 participants with photo URLs
+    const topParticipants = [
+      {
+        country: 'Sweden',
+        participant: 'KAJ',
+        combined: 22.00,
+        photo: 'https://eurovision.tv/portrait/kaj-sweden-2025.jpg'
+      },
+      {
+        country: 'Spain',
+        participant: 'Melody',
+        combined: 20.86,
+        photo: 'https://wiwibloggs.com/melody-spain-2025-rehearsal.jpg'
+      },
+      {
+        country: 'Estonia',
+        participant: 'Tommy Cash',
+        combined: 18.14,
+        photo: 'https://eurovision.tv/portrait/tommy-cash-estonia-2025.jpg'
+      },
+      {
+        country: 'Italy',
+        participant: 'Lucio Corsi',
+        combined: 15.43,
+        photo: 'https://eurovision.tv/portrait/lucio-corsi-italy-2025.jpg'
+      },
+      {
+        country: 'San Marino',
+        participant: 'Gabry Ponte',
+        combined: 15.00,
+        photo: 'https://eurovision.tv/portrait/gabry-ponte-san-marino-2025.jpg'
+      }
     ];
 
     // Defining critic agreement data for each critic
@@ -124,42 +167,56 @@
         { critic: 'Koba', song: 16.67, performance: 11.11 },
         { critic: 'Santa', song: 11.11, performance: 11.11 },
         { critic: 'Undīne', song: 16.67, performance: 11.11 },
-        { critic: 'Vaelita', song: 11.11, performance: 16.67 }
+        { critic: 'Vaelita', song: 11.11, performance: 16.67 },
+        { critic: 'Nikki', song: 22.22, performance: 27.78 }
       ],
       Ilja: [
         { critic: 'Ida', song: 11.11, performance: 11.11 },
         { critic: 'Koba', song: 44.44, performance: 38.89 },
         { critic: 'Santa', song: 11.11, performance: 11.11 },
         { critic: 'Undīne', song: 22.22, performance: 11.11 },
-        { critic: 'Vaelita', song: 16.67, performance: 16.67 }
+        { critic: 'Vaelita', song: 16.67, performance: 16.67 },
+        { critic: 'Nikki', song: 22.22, performance: 11.11 }
       ],
       Koba: [
         { critic: 'Ida', song: 16.67, performance: 11.11 },
         { critic: 'Ilja', song: 44.44, performance: 38.89 },
         { critic: 'Santa', song: 22.22, performance: 22.22 },
         { critic: 'Undīne', song: 22.22, performance: 22.22 },
-        { critic: 'Vaelita', song: 16.67, performance: 22.22 }
+        { critic: 'Vaelita', song: 16.67, performance: 22.22 },
+        { critic: 'Nikki', song: 27.78, performance: 22.22 }
       ],
       Santa: [
         { critic: 'Ida', song: 11.11, performance: 11.11 },
         { critic: 'Ilja', song: 11.11, performance: 11.11 },
         { critic: 'Koba', song: 22.22, performance: 22.22 },
         { critic: 'Undīne', song: 27.78, performance: 22.22 },
-        { critic: 'Vaelita', song: 27.78, performance: 27.78 }
+        { critic: 'Vaelita', song: 27.78, performance: 27.78 },
+        { critic: 'Nikki', song: 27.78, performance: 22.22 }
       ],
       Undīne: [
         { critic: 'Ida', song: 16.67, performance: 11.11 },
         { critic: 'Ilja', song: 22.22, performance: 11.11 },
         { critic: 'Koba', song: 22.22, performance: 22.22 },
         { critic: 'Santa', song: 27.78, performance: 22.22 },
-        { critic: 'Vaelita', song: 33.33, performance: 27.78 }
+        { critic: 'Vaelita', song: 33.33, performance: 27.78 },
+        { critic: 'Nikki', song: 33.33, performance: 22.22 }
       ],
       Vaelita: [
         { critic: 'Ida', song: 11.11, performance: 16.67 },
         { critic: 'Ilja', song: 16.67, performance: 16.67 },
         { critic: 'Koba', song: 16.67, performance: 22.22 },
         { critic: 'Santa', song: 27.78, performance: 27.78 },
-        { critic: 'Undīne', song: 33.33, performance: 27.78 }
+        { critic: 'Undīne', song: 33.33, performance: 27.78 },
+        { critic: 'Nikki', song: 27.78, performance: 22.22 }
+      ],
+      Nikki: [
+        { critic: 'Ida', song: 22.22, performance: 27.78 },
+        { critic: 'Ilja', song: 22.22, performance: 11.11 },
+        { critic: 'Koba', song: 27.78, performance: 22.22 },
+        { critic: 'Santa', song: 27.78, performance: 22.22 },
+        { critic: 'Undīne', song: 33.33, performance: 22.22 },
+        { critic: 'Vaelita', song: 27.78, performance: 22.22 }
       ]
     };
 
@@ -181,7 +238,29 @@
             <section className="mb-10 bg-red-100 p-6 rounded-lg card-hover">
               <h2 className="text-2xl font-bold mb-4 text-red-600">Summary</h2>
               <p className="text-lg">
-                Sweden’s <strong>KAJ</strong> dazzled with their song <em>Bara Bada Bastu</em>, leading with an average song score of <strong>10.67</strong>, performance score of <strong>11.00</strong>, and a combined score of <strong>21.67</strong>. Their vibrant, inclusive performance lit up the 1st Semi-Final!
+                Sweden’s <strong>KAJ</strong> dazzled with their song <em>Bara Bada Bastu</em>, leading with an average song score of <strong>10.86</strong>, performance score of <strong>11.14</strong>, and a combined score of <strong>22.00</strong>. Their vibrant, inclusive performance solidified their top position in the 1st Semi-Final!
+              </p>
+            </section>
+
+            {/* Top 5 Participants with Photos */}
+            <section className="mb-10 bg-pink-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-pink-600">Top 5 Participants</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                {topParticipants.map((participant, index) => (
+                  <div key={index} className="bg-white p-4 rounded-lg shadow-md text-center">
+                    <img
+                      src={participant.photo}
+                      alt={`${participant.participant} from ${participant.country}`}
+                      className="participant-photo mb-4"
+                    />
+                    <h3 className="text-lg font-semibold">{participant.participant}</h3>
+                    <p className="text-gray-600">{participant.country}</p>
+                    <p className="text-gray-800 font-bold">Combined: {participant.combined.toFixed(2)}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="text-sm text-gray-600 mt-4">
+                Note: Photo URLs are placeholders. Visit <a href="https://eurovision.tv" className="text-blue-500 underline">eurovision.tv</a> or <a href="https://wiwibloggs.com" className="text-blue-500 underline">wiwibloggs.com</a> to find actual images.
               </p>
             </section>
 
@@ -262,8 +341,8 @@
 
             {/* Critic Agreement Sections */}
             {Object.keys(criticAgreements).map((critic, index) => (
-              <section key={critic} className={`mb-10 p-6 rounded-lg card-hover ${index % 6 === 0 ? 'bg-red-100' : index % 6 === 1 ? 'bg-orange-100' : index % 6 === 2 ? 'bg-yellow-100' : index % 6 === 3 ? 'bg-green-100' : index % 6 === 4 ? 'bg-blue-100' : 'bg-purple-100'}`}>
-                <h2 className={`text-2xl font-bold mb-4 ${index % 6 === 0 ? 'text-red-600' : index % 6 === 1 ? 'text-orange-600' : index % 6 === 2 ? 'text-yellow-600' : index % 6 === 3 ? 'text-green-600' : index % 6 === 4 ? 'text-blue-600' : 'text-purple-600'}`}>
+              <section key={critic} className={`mb-10 p-6 rounded-lg card-hover ${index % 7 === 0 ? 'bg-red-100' : index % 7 === 1 ? 'bg-orange-100' : index % 7 === 2 ? 'bg-yellow-100' : index % 7 === 3 ? 'bg-green-100' : index % 7 === 4 ? 'bg-blue-100' : index % 7 === 5 ? 'bg-purple-100' : 'bg-indigo-100'}`}>
+                <h2 className={`text-2xl font-bold mb-4 ${index % 7 === 0 ? 'text-red-600' : index % 7 === 1 ? 'text-orange-600' : index % 7 === 2 ? 'text-yellow-600' : index % 7 === 3 ? 'text-green-600' : index % 7 === 4 ? 'text-blue-600' : index % 7 === 5 ? 'text-purple-600' : 'text-indigo-600'}`}>
                   {critic} Agreement Percentages
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -339,7 +418,7 @@
             <section className="mb-10 bg-red-100 p-6 rounded-lg card-hover">
               <h2 className="text-2xl font-bold mb-4 text-red-600">🌟 Interesting Fact</h2>
               <p className="text-lg">
-                Sweden’s <em>Bara Bada Bastu</em> by KAJ was a universal hit, earning the maximum 12 points from four out of six critics (Ida, Ilja, Koba, and Santa) for its song, showcasing a vibrant and inclusive performance that resonated widely!
+                Sweden’s <em>Bara Bada Bastu</em> by KAJ was a universal hit, earning the maximum 12 points from five out of seven critics for its song, showcasing a vibrant and inclusive performance that resonated widely!
               </p>
             </section>
 
@@ -347,7 +426,7 @@
             <section className="bg-blue-100 p-6 rounded-lg card-hover">
               <h2 className="text-2xl font-bold mb-4 text-blue-600">Conclusion</h2>
               <p className="text-lg">
-                Sweden (KAJ) lit up the Eurovision 2025 1st Semi-Final with a combined score of 21.67, leading in both song and performance categories. The rainbow spirit of diversity shines through, with critics like Ilja and Koba showing strong agreement (44.44% for song, 38.89% for performance), though varied tastes highlight the vibrant individuality of the panel. Celebrate the music, celebrate the love! 🌈
+                Sweden (KAJ) lit up the Eurovision 2025 1st Semi-Final with a combined score of 22.00, leading in both song and performance categories. The rainbow spirit of diversity shines through, with strong performances from Spain, Estonia, Italy, and San Marino. Critics like Ilja and Koba showed strong agreement (44.44% for song, 38.89% for performance), highlighting the vibrant individuality of the panel. Celebrate the music, celebrate the love! 🌈
               </p>
             </section>
           </div>
