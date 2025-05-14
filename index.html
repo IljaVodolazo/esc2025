@@ -88,14 +88,6 @@
     .table-row:nth-child(16) { background-color: #FF7F0033; }
     .table-row:nth-child(17) { background-color: #FFFF0033; }
     .table-row:nth-child(18) { background-color: #00FF0033; }
-    /* Styling for participant photos */
-    .participant-photo {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 8px;
-      border: 2px solid #FFFFFF;
-    }
   </style>
 </head>
 <body>
@@ -124,40 +116,6 @@
       { country: 'Spain', participant: 'Melody', song: 10.00, performance: 10.86, combined: 20.86 },
       { country: 'Italy', participant: 'Lucio Corsi', song: 8.00, performance: 7.43, combined: 15.43 },
       { country: 'Switzerland', participant: 'Zoë Më', song: 8.14, performance: 4.86, combined: 13.00 }
-    ];
-
-    // Defining top 5 participants with photo URLs
-    const topParticipants = [
-      {
-        country: 'Sweden',
-        participant: 'KAJ',
-        combined: 22.00,
-        photo: 'https://eurovision.tv/portrait/kaj-sweden-2025.jpg'
-      },
-      {
-        country: 'Spain',
-        participant: 'Melody',
-        combined: 20.86,
-        photo: 'https://wiwibloggs.com/melody-spain-2025-rehearsal.jpg'
-      },
-      {
-        country: 'Estonia',
-        participant: 'Tommy Cash',
-        combined: 18.14,
-        photo: 'https://eurovision.tv/portrait/tommy-cash-estonia-2025.jpg'
-      },
-      {
-        country: 'Italy',
-        participant: 'Lucio Corsi',
-        combined: 15.43,
-        photo: 'https://eurovision.tv/portrait/lucio-corsi-italy-2025.jpg'
-      },
-      {
-        country: 'San Marino',
-        participant: 'Gabry Ponte',
-        combined: 15.00,
-        photo: 'https://eurovision.tv/portrait/gabry-ponte-san-marino-2025.jpg'
-      }
     ];
 
     // Defining critic agreement data for each critic
@@ -190,6 +148,7 @@
         { critic: 'Ida', song: 11.11, performance: 11.11 },
         { critic: 'Ilja', song: 11.11, performance: 11.11 },
         { critic: 'Koba', song: 22.22, performance: 22.22 },
+        { critic: 'Santa', song: 27.78, performance: 22.22 },
         { critic: 'Undīne', song: 27.78, performance: 22.22 },
         { critic: 'Vaelita', song: 27.78, performance: 27.78 },
         { critic: 'Nikki', song: 27.78, performance: 22.22 }
@@ -220,6 +179,38 @@
       ]
     };
 
+    // Defining critic preferences without recommendations
+    const criticPreferences = [
+      {
+        name: 'Ida',
+        description: 'Ida favors vibrant, crowd-pleasing pop and dance songs with dynamic, inclusive performances that captivate audiences.'
+      },
+      {
+        name: 'Ilja',
+        description: 'Ilja enjoys innovative pop and electronic tracks with theatrical, visually striking performances.'
+      },
+      {
+        name: 'Koba',
+        description: 'Koba loves electronic dance music with high-energy, tech-savvy performances that energize the crowd.'
+      },
+      {
+        name: 'Santa',
+        description: 'Santa is drawn to emotional pop and ballads with powerful vocals and heartfelt, story-driven performances.'
+      },
+      {
+        name: 'Undīne',
+        description: 'Undīne appreciates artistic, genre-bending music with creative, visually unique performances.'
+      },
+      {
+        name: 'Vaelita',
+        description: 'Vaelita favors poetic, alternative pop with intimate, emotionally resonant, or quirky performances.'
+      },
+      {
+        name: 'Nikki',
+        description: 'Nikki values culturally rich, fusion-based music with authentic, expressive performances that blend tradition and modernity.'
+      }
+    ];
+
     // Defining main App component
     const App = () => {
       // Sorting data for top 5
@@ -239,28 +230,6 @@
               <h2 className="text-2xl font-bold mb-4 text-red-600">Summary</h2>
               <p className="text-lg">
                 Sweden’s <strong>KAJ</strong> dazzled with their song <em>Bara Bada Bastu</em>, leading with an average song score of <strong>10.86</strong>, performance score of <strong>11.14</strong>, and a combined score of <strong>22.00</strong>. Their vibrant, inclusive performance solidified their top position in the 1st Semi-Final!
-              </p>
-            </section>
-
-            {/* Top 5 Participants with Photos */}
-            <section className="mb-10 bg-pink-100 p-6 rounded-lg card-hover">
-              <h2 className="text-2xl font-bold mb-4 text-pink-600">Top 5 Participants</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                {topParticipants.map((participant, index) => (
-                  <div key={index} className="bg-white p-4 rounded-lg shadow-md text-center">
-                    <img
-                      src={participant.photo}
-                      alt={`${participant.participant} from ${participant.country}`}
-                      className="participant-photo mb-4"
-                    />
-                    <h3 className="text-lg font-semibold">{participant.participant}</h3>
-                    <p className="text-gray-600">{participant.country}</p>
-                    <p className="text-gray-800 font-bold">Combined: {participant.combined.toFixed(2)}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-600 mt-4">
-                Note: Photo URLs are placeholders. Visit <a href="https://eurovision.tv" className="text-blue-500 underline">eurovision.tv</a> or <a href="https://wiwibloggs.com" className="text-blue-500 underline">wiwibloggs.com</a> to find actual images.
               </p>
             </section>
 
@@ -384,6 +353,19 @@
                 </div>
               </section>
             ))}
+
+            {/* Critic Preferences Section */}
+            <section className="mb-10 bg-indigo-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-indigo-600">Critic Preferences</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {criticPreferences.map((critic, index) => (
+                  <div key={index} className={`p-4 rounded-lg shadow-md ${index % 7 === 0 ? 'bg-red-50' : index % 7 === 1 ? 'bg-orange-50' : index % 7 === 2 ? 'bg-yellow-50' : index % 7 === 3 ? 'bg-green-50' : index % 7 === 4 ? 'bg-blue-50' : index % 7 === 5 ? 'bg-purple-50' : 'bg-indigo-50'}`}>
+                    <h3 className="text-lg font-semibold mb-2">{critic.name}</h3>
+                    <p className="text-gray-700">{critic.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
 
             {/* Detailed Scores Table */}
             <section className="mb-10 bg-purple-100 p-6 rounded-lg card-hover">
