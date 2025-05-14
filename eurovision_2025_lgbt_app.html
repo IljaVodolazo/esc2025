@@ -1,0 +1,362 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eurovision 2025 1st Semi-Final - LGBTQ+ Pride</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.8.1/prop-types.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+  <style>
+    /* Custom rainbow gradient for backgrounds */
+    .rainbow-bg {
+      background: linear-gradient(
+        90deg,
+        #FF0000,
+        #FF7F00,
+        #FFFF00,
+        #00FF00,
+        #0000FF,
+        #4B0082
+      );
+    }
+    /* Hover effect for cards */
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    /* Custom table row colors */
+    .table-row:nth-child(1) { background-color: #FF000033; }
+    .table-row:nth-child(2) { background-color: #FF7F0033; }
+    .table-row:nth-child(3) { background-color: #FFFF0033; }
+    .table-row:nth-child(4) { background-color: #00FF0033; }
+    .table-row:nth-child(5) { background-color: #0000FF33; }
+    .table-row:nth-child(6) { background-color: #4B008233; }
+    .table-row:nth-child(7) { background-color: #FF000033; }
+    .table-row:nth-child(8) { background-color: #FF7F0033; }
+    .table-row:nth-child(9) { background-color: #FFFF0033; }
+    .table-row:nth-child(10) { background-color: #00FF0033; }
+    .table-row:nth-child(11) { background-color: #0000FF33; }
+    .table-row:nth-child(12) { background-color: #4B008233; }
+    .table-row:nth-child(13) { background-color: #FF000033; }
+    .table-row:nth-child(14) { background-color: #FF7F0033; }
+    .table-row:nth-child(15) { background-color: #FFFF0033; }
+    .table-row:nth-child(16) { background-color: #00FF0033; }
+    .table-row:nth-child(17) { background-color: #0000FF33; }
+    .table-row:nth-child(18) { background-color: #4B008233; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    // Initializing React root
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+
+    // Defining data for analysis
+    const data = [
+      { country: 'Iceland', participant: 'VÆB', song: 3.33, performance: 4.17, combined: 7.50 },
+      { country: 'Poland', participant: 'Justyna Steczkowska', song: 6.17, performance: 7.67, combined: 13.83 },
+      { country: 'Slovenia', participant: 'Klemen', song: 5.50, performance: 4.83, combined: 10.33 },
+      { country: 'Estonia', participant: 'Tommy Cash', song: 7.67, performance: 9.50, combined: 17.17 },
+      { country: 'Ukraine', participant: 'Ziferblat', song: 3.67, performance: 4.00, combined: 7.67 },
+      { country: 'Sweden', participant: 'KAJ', song: 10.67, performance: 11.00, combined: 21.67 },
+      { country: 'Portugal', participant: 'NAPA', song: 3.00, performance: 2.33, combined: 5.33 },
+      { country: 'Norway', participant: 'Kyle Alessandro', song: 7.50, performance: 7.67, combined: 15.17 },
+      { country: 'Belgium', participant: 'Red Sebastian', song: 3.83, performance: 5.17, combined: 9.00 },
+      { country: 'Azerbaijan', participant: 'Mamagama', song: 2.50, performance: 2.83, combined: 5.33 },
+      { country: 'San Marino', participant: 'Gabry Ponte', song: 8.17, performance: 6.00, combined: 14.17 },
+      { country: 'Albania', participant: 'Shkodra Elektronike', song: 7.50, performance: 7.00, combined: 14.50 },
+      { country: 'Netherlands', participant: 'Claude', song: 8.33, performance: 7.33, combined: 15.67 },
+      { country: 'Croatia', participant: 'Marko Bošnjak', song: 4.83, performance: 5.50, combined: 10.33 },
+      { country: 'Cyprus', participant: 'Theo Evan', song: 6.83, performance: 8.00, combined: 14.83 },
+      { country: 'Spain', participant: 'Melody', song: 9.67, performance: 10.67, combined: 20.33 },
+      { country: 'Italy', participant: 'Lucio Corsi', song: 7.67, performance: 7.00, combined: 14.67 },
+      { country: 'Switzerland', participant: 'Zoë Më', song: 8.17, performance: 5.50, combined: 13.67 }
+    ];
+
+    // Defining critic agreement data for each critic
+    const criticAgreements = {
+      Ida: [
+        { critic: 'Ilja', song: 11.11, performance: 11.11 },
+        { critic: 'Koba', song: 16.67, performance: 11.11 },
+        { critic: 'Santa', song: 11.11, performance: 11.11 },
+        { critic: 'Undīne', song: 16.67, performance: 11.11 },
+        { critic: 'Vaelita', song: 11.11, performance: 16.67 }
+      ],
+      Ilja: [
+        { critic: 'Ida', song: 11.11, performance: 11.11 },
+        { critic: 'Koba', song: 44.44, performance: 38.89 },
+        { critic: 'Santa', song: 11.11, performance: 11.11 },
+        { critic: 'Undīne', song: 22.22, performance: 11.11 },
+        { critic: 'Vaelita', song: 16.67, performance: 16.67 }
+      ],
+      Koba: [
+        { critic: 'Ida', song: 16.67, performance: 11.11 },
+        { critic: 'Ilja', song: 44.44, performance: 38.89 },
+        { critic: 'Santa', song: 22.22, performance: 22.22 },
+        { critic: 'Undīne', song: 22.22, performance: 22.22 },
+        { critic: 'Vaelita', song: 16.67, performance: 22.22 }
+      ],
+      Santa: [
+        { critic: 'Ida', song: 11.11, performance: 11.11 },
+        { critic: 'Ilja', song: 11.11, performance: 11.11 },
+        { critic: 'Koba', song: 22.22, performance: 22.22 },
+        { critic: 'Undīne', song: 27.78, performance: 22.22 },
+        { critic: 'Vaelita', song: 27.78, performance: 27.78 }
+      ],
+      Undīne: [
+        { critic: 'Ida', song: 16.67, performance: 11.11 },
+        { critic: 'Ilja', song: 22.22, performance: 11.11 },
+        { critic: 'Koba', song: 22.22, performance: 22.22 },
+        { critic: 'Santa', song: 27.78, performance: 22.22 },
+        { critic: 'Vaelita', song: 33.33, performance: 27.78 }
+      ],
+      Vaelita: [
+        { critic: 'Ida', song: 11.11, performance: 16.67 },
+        { critic: 'Ilja', song: 16.67, performance: 16.67 },
+        { critic: 'Koba', song: 16.67, performance: 22.22 },
+        { critic: 'Santa', song: 27.78, performance: 27.78 },
+        { critic: 'Undīne', song: 33.33, performance: 27.78 }
+      ]
+    };
+
+    // Defining main App component
+    const App = () => {
+      // Sorting data for top 5
+      const topSong = data.sort((a, b) => b.song - a.song).slice(0, 5);
+      const topPerformance = data.sort((a, b) => b.performance - a.performance).slice(0, 5);
+      const topCombined = data.sort((a, b) => b.combined - a.combined).slice(0, 5);
+
+      return (
+        <div className="min-h-screen rainbow-bg text-gray-800">
+          <div className="container mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-xl">
+            <h1 className="text-4xl font-extrabold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500">
+              🌈 Eurovision 2025 1st Semi-Final 🌈
+            </h1>
+
+            {/* Summary Section */}
+            <section className="mb-10 bg-red-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-red-600">Summary</h2>
+              <p className="text-lg">
+                Sweden’s <strong>KAJ</strong> dazzled with their song <em>Bara Bada Bastu</em>, leading with an average song score of <strong>10.67</strong>, performance score of <strong>11.00</strong>, and a combined score of <strong>21.67</strong>. Their vibrant, inclusive performance lit up the 1st Semi-Final!
+              </p>
+            </section>
+
+            {/* Top 5 Song Scores */}
+            <section className="mb-10 bg-orange-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-orange-600">Top 5 Song Scores</h2>
+              <Recharts.ResponsiveContainer width="100%" height={400}>
+                <Recharts.BarChart data={topSong}>
+                  <defs>
+                    <linearGradient id="rainbowGradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#FF0000" />
+                      <stop offset="20%" stopColor="#FF7F00" />
+                      <stop offset="40%" stopColor="#FFFF00" />
+                      <stop offset="60%" stopColor="#00FF00" />
+                      <stop offset="80%" stopColor="#0000FF" />
+                      <stop offset="100%" stopColor="#4B0082" />
+                    </linearGradient>
+                  </defs>
+                  <Recharts.CartesianGrid strokeDasharray="3 3" stroke="#FFFFFF" />
+                  <Recharts.XAxis dataKey="country" stroke="#000000" />
+                  <Recharts.YAxis label={{ value: 'Average Score', angle: -90, position: 'insideLeft', fill: '#000000' }} stroke="#000000" />
+                  <Recharts.Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #000000' }} />
+                  <Recharts.Legend />
+                  <Recharts.Bar dataKey="song" fill="url(#rainbowGradient)" />
+                </Recharts.BarChart>
+              </Recharts.ResponsiveContainer>
+            </section>
+
+            {/* Top 5 Performance Scores */}
+            <section className="mb-10 bg-yellow-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-yellow-600">Top 5 Performance Scores</h2>
+              <Recharts.ResponsiveContainer width="100%" height={400}>
+                <Recharts.BarChart data={topPerformance}>
+                  <defs>
+                    <linearGradient id="rainbowGradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#FF0000" />
+                      <stop offset="20%" stopColor="#FF7F00" />
+                      <stop offset="40%" stopColor="#FFFF00" />
+                      <stop offset="60%" stopColor="#00FF00" />
+                      <stop offset="80%" stopColor="#0000FF" />
+                      <stop offset="100%" stopColor="#4B0082" />
+                    </linearGradient>
+                  </defs>
+                  <Recharts.CartesianGrid strokeDasharray="3 3" stroke="#FFFFFF" />
+                  <Recharts.XAxis dataKey="country" stroke="#000000" />
+                  <Recharts.YAxis label={{ value: 'Average Score', angle: -90, position: 'insideLeft', fill: '#000000' }} stroke="#000000" />
+                  <Recharts.Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #000000' }} />
+                  <Recharts.Legend />
+                  <Recharts.Bar dataKey="performance" fill="url(#rainbowGradient)" />
+                </Recharts.BarChart>
+              </Recharts.ResponsiveContainer>
+            </section>
+
+            {/* Top 5 Combined Scores */}
+            <section className="mb-10 bg-green-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-green-600">Top 5 Combined Scores</h2>
+              <Recharts.ResponsiveContainer width="100%" height={400}>
+                <Recharts.BarChart data={topCombined}>
+                  <defs>
+                    <linearGradient id="rainbowGradient" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#FF0000" />
+                      <stop offset="20%" stopColor="#FF7F00" />
+                      <stop offset="40%" stopColor="#FFFF00" />
+                      <stop offset="60%" stopColor="#00FF00" />
+                      <stop offset="80%" stopColor="#0000FF" />
+                      <stop offset="100%" stopColor="#4B0082" />
+                    </linearGradient>
+                  </defs>
+                  <Recharts.CartesianGrid strokeDasharray="3 3" stroke="#FFFFFF" />
+                  <Recharts.XAxis dataKey="country" stroke="#000000" />
+                  <Recharts.YAxis label={{ value: 'Combined Score', angle: -90, position: 'insideLeft', fill: '#000000' }} stroke="#000000" />
+                  <Recharts.Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #000000' }} />
+                  <Recharts.Legend />
+                  <Recharts.Bar dataKey="combined" fill="url(#rainbowGradient)" />
+                </Recharts.BarChart>
+              </Recharts.ResponsiveContainer>
+            </section>
+
+            {/* Critic Agreement Sections */}
+            {Object.keys(criticAgreements).map((critic, index) => (
+              <section key={critic} className={`mb-10 p-6 rounded-lg card-hover ${index % 6 === 0 ? 'bg-red-100' : index % 6 === 1 ? 'bg-orange-100' : index % 6 === 2 ? 'bg-yellow-100' : index % 6 === 3 ? 'bg-green-100' : index % 6 === 4 ? 'bg-blue-100' : 'bg-purple-100'}`}>
+                <h2 className={`text-2xl font-bold mb-4 ${index % 6 === 0 ? 'text-red-600' : index % 6 === 1 ? 'text-orange-600' : index % 6 === 2 ? 'text-yellow-600' : index % 6 === 3 ? 'text-green-600' : index % 6 === 4 ? 'text-blue-600' : 'text-purple-600'}`}>
+                  {critic} Agreement Percentages
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Agreement Table</h3>
+                    <table className="min-w-full bg-white shadow-md rounded-lg">
+                      <thead>
+                        <tr className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
+                          <th className="py-2 px-4 text-left">Critic Pair</th>
+                          <th className="py-2 px-4 text-left">Song (%)</th>
+                          <th className="py-2 px-4 text-left">Performance (%)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {criticAgreements[critic].map((item, idx) => (
+                          <tr key={idx} className="table-row">
+                            <td className="py-2 px-4">{critic} vs {item.critic}</td>
+                            <td className="py-2 px-4">{item.song.toFixed(2)}</td>
+                            <td className="py-2 px-4">{item.performance.toFixed(2)}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Agreement Chart</h3>
+                    <Recharts.ResponsiveContainer width="100%" height={200}>
+                      <Recharts.BarChart data={criticAgreements[critic]}>
+                        <Recharts.CartesianGrid strokeDasharray="3 3" stroke="#FFFFFF" />
+                        <Recharts.XAxis dataKey="critic" stroke="#000000" />
+                        <Recharts.YAxis label={{ value: 'Agreement %', angle: -90, position: 'insideLeft', fill: '#000000' }} stroke="#000000" />
+                        <Recharts.Tooltip contentStyle={{ backgroundColor: '#FFFFFF', border: '1px solid #000000' }} />
+                        <Recharts.Legend />
+                        <Recharts.Bar dataKey="song" fill="#EF4444" name="Song" />
+                        <Recharts.Bar dataKey="performance" fill="#F59E0B" name="Performance" />
+                      </Recharts.BarChart>
+                    </Recharts.ResponsiveContainer>
+                  </div>
+                </div>
+              </section>
+            ))}
+
+            {/* Detailed Scores Table */}
+            <section className="mb-10 bg-purple-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-purple-600">Detailed Scores</h2>
+              <div className="overflow-x-auto">
+                <table className="min-w-full bg-white shadow-md rounded-lg">
+                  <thead>
+                    <tr className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
+                      <th className="py-3 px-4 text-left">Country</th>
+                      <th className="py-3 px-4 text-left">Participant</th>
+                      <th className="py-3 px-4 text-left">Song Score</th>
+                      <th className="py-3 px-4 text-left">Performance Score</th>
+                      <th className="py-3 px-4 text-left">Combined Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((item, index) => (
+                      <tr key={index} className="table-row">
+                        <td className="py-2 px-4">{item.country}</td>
+                        <td className="py-2 px-4">{item.participant}</td>
+                        <td className="py-2 px-4">{item.song.toFixed(2)}</td>
+                        <td className="py-2 px-4">{item.performance.toFixed(2)}</td>
+                        <td className="py-2 px-4">{item.combined.toFixed(2)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            {/* Interesting Fact */}
+            <section className="mb-10 bg-red-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-red-600">🌟 Interesting Fact</h2>
+              <p className="text-lg">
+                Sweden’s <em>Bara Bada Bastu</em> by KAJ was a universal hit, earning the maximum 12 points from four out of six critics (Ida, Ilja, Koba, and Santa) for its song, showcasing a vibrant and inclusive performance that resonated widely!
+              </p>
+            </section>
+
+            {/* Conclusion */}
+            <section className="bg-blue-100 p-6 rounded-lg card-hover">
+              <h2 className="text-2xl font-bold mb-4 text-blue-600">Conclusion</h2>
+              <p className="text-lg">
+                Sweden (KAJ) lit up the Eurovision 2025 1st Semi-Final with a combined score of 21.67, leading in both song and performance categories. The rainbow spirit of diversity shines through, with critics like Ilja and Koba showing strong agreement (44.44% for song, 38.89% for performance), though varied tastes highlight the vibrant individuality of the panel. Celebrate the music, celebrate the love! 🌈
+              </p>
+            </section>
+          </div>
+        </div>
+      );
+    };
+
+    // Rendering the app
+    root.render(<App />);
+  </script>
+</body>
+</html>
